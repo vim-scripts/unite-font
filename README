@@ -1,0 +1,8 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=3319
+
+A Unite.vim plugin for changing your font. See details in the following pages. 
+
+* http://github.com/ujihisa/unite-font (development) 
+* https://github.com/shougo/unite.vim (unite core)
+
+Note: version 1.0 only supports Mac OS X. Next version will support other platforms as well.
