@@ -6,23 +6,32 @@ let s:unite_source = {
       \ }
 
 function! s:unite_source.gather_candidates(args, context)
-  let list = has('gui_macvim') ?
-        \ split(glob('/Library/Fonts/*'), "\n") :
-        \ ['Menlo', 'Andale Mono'] " FIXME
-  call map(list, "fnamemodify(v:val, ':t:r')")
-  call map(list, "[v:val, substitute(v:val, ' ', '\\\\ ', 'g')]")
-  " list is like [("Andale Mono", "Andale\ Mono"), ...]
+  if has('gui_macvim')
+    let list = split(glob('/Library/Fonts/*'), "\n")
+    call map(list, "fnamemodify(v:val, ':t:r')")
+  elseif executable('fc-list')
+    " 'fc-list' for win32 is included 'gtk win32 runtime'.
+    " see: http://www.gtk.org/download-windows.html
+    let list = split(iconv(system('fc-list :spacing=mono'), 'utf-8', &encoding), "\n")
+    if v:lang =~ '^\(ja\|ko\|zh\)' 
+      let list += split(iconv(system('fc-list :spacing=90'), 'utf-8', &encoding), "\n")
+    endif
+    call map(list, "substitute(v:val, '[:,].*', '', '')")
+  else
+    echoerr 'Your environment does not support the current version of unite-font.'
+    finish
+  endif
 
   return map(list, '{
-        \ "word": v:val[0],
+        \ "word": v:val,
         \ "source": "font",
         \ "kind": "command",
-        \ "action__command": "set guifont=" . v:val[1],
+        \ "action__command": "let &guifont=" . string(v:val),
         \ }')
 endfunction
 
 function! unite#sources#font#define()
-  return s:unite_source
+  return has('gui_running') ? s:unite_source : []
 endfunction
 
 let &cpo = s:save_cpo
