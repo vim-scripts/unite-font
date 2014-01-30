@@ -21,7 +21,10 @@ function! s:unite_source.hooks.on_close(args, context)
 endfunction
 
 function! s:unite_source.gather_candidates(args, context)
-  if has('gui_macvim')
+  if exists("g:unite_font_custom_list")
+    let list = copy(g:unite_font_custom_list)
+  elseif has('gui_macvim')
+  "if has('gui_macvim')
     let list = split(glob('/Library/Fonts/*'), "\n")
     let list = extend(list, split(glob('/System/Library/Fonts/*'), "\n"))
     let list = extend(list, split(glob('~/Library/Fonts/*'), "\n"))
