@@ -28,6 +28,16 @@ g:unite_font_custom_list
               \ "Source Code Pro for Powerline",
               \ ]
 <
+        it is also possible, if you don't need to change it, to define the
+        font size int the list by following the conventions suitable for your
+        system. For example for MacOs: >
+
+        let g:unite_font_custom_list = [
+              \ "Inconsolata-dz for Powerline:h16",
+              \ "DejaVu Sans Mono for Powerline:h14",
+              \ "Source Code Pro for Powerline:h12",
+              \ ]
+<
 
 g:unite_font_sizes
         Specifies the list of font sizes which will be displayed by *unite-font*. For example:
