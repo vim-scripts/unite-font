@@ -21,16 +21,30 @@ function! s:unite_source.hooks.on_close(args, context)
   unlet s:initial_guifont
 endfunction
 
+function! s:set_current_font_size(size)
+  if has("gui_gtk2")
+    let template = "let &guifont='%s\ %s'"
+  else
+    let template = "let &guifont='%s:h%s'"
+  end
+
+  let template = template." | let g:unite_font_current_size=%s"
+  return printf(template, s:current_guifont_name, a:size, a:size)
+endfunction
+
 function! s:unite_source.gather_candidates(args, context)
-  let current_guifont_name = split(s:initial_guifont, ':')[0]
+  if has("gui_gtk2")
+    let s:current_guifont_name = split(s:initial_guifont, '\')[0]
+  else
+    let s:current_guifont_name = split(s:initial_guifont, ':')[0]
+  end
+
   let sizes = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
-  let template = "let &guifont='%s:h%s'"
   return map(sizes, '{
         \ "word": string(v:val),
-        \ "source": "font/size",
         \ "kind": "command",
-        \ "action__command": printf(template, current_guifont_name, string(v:val))
+        \ "action__command": s:set_current_font_size(v:val)
         \}')
 endfunction
 
