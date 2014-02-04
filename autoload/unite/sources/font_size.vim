@@ -40,7 +40,7 @@ function! s:unite_source.gather_candidates(args, context)
   end
 
   if exists("g:unite_font_sizes")
-    let sizes = g:unite_font_sizes
+    let sizes = copy(g:unite_font_sizes)
   else
     let sizes = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
   endif
