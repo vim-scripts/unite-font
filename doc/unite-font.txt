@@ -1,0 +1,56 @@
+*unite-font.txt*	A Unite plugin for changing your font and font size.
+
+==============================================================================
+INTRODUCTION				*unite-font-introduction*
+
+*unite-font* is a Unite.vim plugin for changing your font and font size. It
+adds two sources to unite:
+
+- font: by default it lists all the fonts available on your system but it is
+  possible to customize the list by defining the variable
+  g:unite_font_custom_list
+
+- font/size: by default it lists font size from 8 to 20 but it is possible to
+  customize the list by defining the variable g:unite_font_sizes
+
+Requirement:
+- unite.vim
+
+==============================================================================
+VARIABLES  				*unite-font-variables*
+
+g:unite_font_custom_list
+	Specifies the list of fonts which will be displayed by *unite-font*. For example: >
+
+        let g:unite_font_custom_list = [
+              \ "Inconsolata-dz for Powerline",
+              \ "DejaVu Sans Mono for Powerline",
+              \ "Source Code Pro for Powerline",
+              \ ]
+<
+        it is also possible, if you don't need to change it, to define the
+        font size int the list by following the conventions suitable for your
+        system. For example for MacOs: >
+
+        let g:unite_font_custom_list = [
+              \ "Inconsolata-dz for Powerline:h16",
+              \ "DejaVu Sans Mono for Powerline:h14",
+              \ "Source Code Pro for Powerline:h12",
+              \ ]
+<
+
+g:unite_font_sizes
+        Specifies the list of font sizes which will be displayed by *unite-font*. For example:
+        >
+        let g:unite_font_sizes = [8, 10, 12, 14, 16, 18, 20]
+<
+        The default value is [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+
+g:unite_font_current_size
+        contains the current font size. This variable is automatically set
+        each time you modify the font size using *unite-font*. It is used in order to
+        preserve font-size when changing font.
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl
